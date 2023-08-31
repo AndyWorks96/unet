@@ -1,6 +1,6 @@
 # %config InlineBackend.figure_format = 'retina'
 # %matplotlib inline
-
+from sklearn.linear_model import LassoCV
 import seaborn as sns
 sns.set(font= "Kaiti",style="ticks",font_scale=1.4)
 import matplotlib
@@ -26,18 +26,20 @@ traindf = pd.read_excel("./data/Molecular_Descriptor.xlsx",sheet_name="training"
 traindfy = pd.read_excel("./data/ERα_activity.xlsx",sheet_name="training")
 
 train_x = traindf.iloc[:,1:]
+# train_x = traindf.iloc[]
+# train_y = traindfy
 train_y = traindfy.iloc[:,2]
 
-train_y.plot(kind = "hist",bins = 50,figsize = (10,6))
+# train_y.plot(kind = "hist",bins = 50,figsize = (10,6))
 # plt.show()
 
 ## 训练数据的标准化处理
 train_xs = StandardScaler().fit_transform(train_x)
-train_xs[0:5,:]
+# train_xs[0:5,:]
 
 ## 可视化其中的几个变量与因变量Y的散点图，看一下数据的分布
 train_xname = train_x.columns.values
-plt.figure(figsize=(50,50))
+# plt.figure(figsize=(50,50))
 
 # for ii in np.arange(20):
 #     plt.subplot(8,8,ii+1)
@@ -71,6 +73,22 @@ index = varcorrdf.varname[~varcorrdf.mycorr.isna()].index.values
 train_xs = train_xs[:,index]
 
 train_xname = train_xname[index]
+
+# 1*10 -4
+alphas = np.logspace(-3, -2,100)
+# print(alphas)
+model_lassocv = LassoCV(alphas = alphas,cv=5,max_iter=100000,selection= 'random').fit(train_xs,train_y)
+coef = pd.Series(model_lassocv.coef_,index=train_xname)
+# print(coef)
+
+print(model_lassocv.alpha_)
+print("Lasso picked " + str(sum(coef!=0))+" variables and eliminated the other "+str(sum(coef==0)))
+
+index = coef[coef != 0].index
+
+X = train_xs[index]
+
+
 train_xname[1:5]
 
 ## 再次通过可视化检查数据
@@ -92,20 +110,20 @@ varcorrdf.mycorr.plot(kind = "hist",bins = 30,figsize = (12,7))
 ## 基于统计方法选择
 
 ## （1）删除低方差的特征
-from sklearn.feature_selection import VarianceThreshold
-VTH = VarianceThreshold(threshold = 1)
-train_xs_new = VTH.fit_transform(train_xs)
-print(train_xs_new.shape)
+# from sklearn.feature_selection import VarianceThreshold
+# VTH = VarianceThreshold(threshold = 1)
+# train_xs = VTH.fit_transform(train_xs)
+# print(train_xs.shape)
 ## 挑出了166个
 
 ## 选择K个最高得分的变量，回归可使用mutual_info_regression等
-from sklearn.feature_selection import SelectKBest, mutual_info_regression
-## 通过方差分析的F值选择K个变量
-KbestF = SelectKBest(mutual_info_regression, k=50)
-KbestF_train_xs = KbestF.fit_transform(train_xs,train_y.values)
-print(KbestF_train_xs.shape)
+# from sklearn.feature_selection import SelectKBest, mutual_info_regression
+# ## 通过方差分析的F值选择K个变量
+# KbestF = SelectKBest(mutual_info_regression, k=50)
+# train_xs = KbestF.fit_transform(train_xs,train_y.values)
+# print(train_xs.shape)
 
-train_xname[KbestF.get_support()]   ## 选择出的较重要特征
+# train_xname[KbestF.get_support()]   ## 选择出的较重要特征
 ## 该种特征选择方法还有其他的方式可以使用
 
 ## 基于机器学习的方法

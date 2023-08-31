@@ -2,16 +2,22 @@ import os
 import numpy as np
 import SimpleITK as sitk
 
-flair_name = "_flair.nii.gz"
-t1_name = "_t1.nii.gz"
-t1ce_name = "_t1ce.nii.gz"
-t2_name = "_t2.nii.gz"
-mask_name = "_seg.nii.gz"
+# flair_name = "_flair.nii.gz"
+# t1_name = "_t1.nii.gz"
+# t1ce_name = "_t1ce.nii.gz"
+# t2_name = "_t2.nii.gz"
+# mask_name = "_seg.nii.gz"
 
-bratshgg_path = r"D:\Python\PyCharm\PycharmProject\PYTORCH\FCN2D_For_BraTs\data\HGG"
-bratslgg_path = r"D:\Python\PyCharm\PycharmProject\PYTORCH\FCN2D_For_BraTs\data\LGG"
-outputImg_path = './data/trainImage'
-outputMask_path = './data/trainMask'
+flair_name = "_flair.dcm"
+t1_name = "_t1.dcm"
+t1ce_name = "_t1ce.dcm"
+t2_name = "_t2.dcm"
+mask_name = "_seg.dcm"
+
+bratshgg_path = './data/HGG'
+# bratslgg_path = r"D:\Python\PyCharm\PycharmProject\PYTORCH\FCN2D_For_BraTs\data\LGG"
+outputImg_path = './data/trainImage/'
+outputMask_path = './data/trainMask/'
 
 if not os.path.exists(outputImg_path):
     os.mkdir(outputImg_path)
@@ -35,7 +41,7 @@ def file_name_path(file_dir, dir=True, file=False):
 
 
 pathhgg_list = file_name_path(bratshgg_path)
-pathlgg_list = file_name_path(bratslgg_path)
+# pathlgg_list = file_name_path(bratslgg_path)
 
 
 def normalize(slice, bottom=99, down=1):

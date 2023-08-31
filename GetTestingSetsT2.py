@@ -9,7 +9,7 @@ mask_name = "_seg.nii.gz"
 
 
 bratshgg_path = './data/t2Test'
-# bratslgg_path = r"D:\Python\PyCharm\PycharmProject\PYTORCH\UNet2D_BraTs\data\LGG"
+
 outputImg_path = './data/t2Image01/'
 outputMask_path = './data/t2Mask01/'
 

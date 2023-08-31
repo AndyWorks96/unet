@@ -212,7 +212,7 @@ def main():
                         OneWTMask[PatchPosition, :, :] = target[i, 0, :, :]
                         OneTCMask[PatchPosition, :, :] = target[i, 1, :, :]
                         OneETMask[PatchPosition, :, :] = target[i, 2, :, :]
-                    # 提取当前块的位置、名字
+                    # 提取当前块的位置、名
                     PatchPosition, NameNow = GetPatchPosition(img_paths[i])
                     if (NameNow != LastName):
                         # 计算指标

@@ -69,7 +69,7 @@ def getPaRadio():
 
     dict_item01 = result01.items()
     all_data_frame = pd.DataFrame(list(dict_item01))[22:]
-    all_data_frame.loc['724'] = ['name', 'REN GUI LIAN^REN GUI' ]
+    all_data_frame.loc['724'] = ['name', 'REN GUI LIAN^REN GUI']
     for subsetindex  in range(len(path_list)):
         if subsetindex == 0:
             continue
@@ -99,10 +99,13 @@ def getPaRadio():
         # data_frameT = data_frameT.loc[0]
 
         if subsetindex == 42:
-            name = './data/dwiTest/' + 'allPatient'
+            name = './data/dwiTest/' + 'allPatientsRadio_dwi'
 
             xlsx_name = name  + '.xlsx'
             xlsx_obj = pd.ExcelWriter(xlsx_name)
+            current = 22
+            for idx in range(current, 724):
+                all_data_frame[0][idx] = 'ADC_' + all_data_frame[0][idx]
             all_data_frame = all_data_frame.T
             all_data_frame.to_excel(xlsx_obj, header=None, index=False)
 

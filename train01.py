@@ -15,7 +15,8 @@ import numpy as np
 from tqdm import tqdm
 
 from sklearn.model_selection import train_test_split
-from sklearn.externals import joblib
+# from sklearn.externals import joblib
+import joblib
 from skimage.io import imread
 
 import torch

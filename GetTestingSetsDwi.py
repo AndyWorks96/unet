@@ -8,8 +8,8 @@ mask_name = "_seg.nii.gz"
 
 
 
-bratshgg_path = './data/dwiTest42'
-# bratslgg_path = r"D:\Python\PyCharm\PycharmProject\PYTORCH\UNet2D_BraTs\data\LGG"
+bratshgg_path = './data/dwiTest'
+
 outputImg_path = './data/dwiImage01/'
 outputMask_path = './data/dwiMask01/'
 

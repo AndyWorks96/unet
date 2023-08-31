@@ -35,10 +35,10 @@ from metrics import dice_coef, batch_iou, mean_iou, iou_score
 import losses
 from utils import str2bool, count_params
 import pandas as pd
-import unet_5k
+
 import unet
 
-import attention_Unet
+
 
 
 

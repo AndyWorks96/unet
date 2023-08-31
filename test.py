@@ -33,7 +33,8 @@ import unet
 from metrics import dice_coef, batch_iou, mean_iou, iou_score ,ppv,sensitivity
 import losses
 from utils import str2bool, count_params
-from sklearn.externals import joblib
+# from sklearn.externals import joblib
+import joblib
 from hausdorff import hausdorff_distance
 import imageio
 
@@ -52,9 +53,9 @@ def parse_args():
 
 def main():
     val_args = parse_args()
-    val_args.name = 'AndyWorks_Unet_woDS'
-    val_args.mode = "GetPicture"
-    # val_args.mode = "Calculate"
+    val_args.name = 'Jiu0Monkey_Unet_woDS'
+    # val_args.mode = "GetPicture"
+    val_args.mode = "Calculate"
     args = joblib.load('models/%s/args.pkl' %val_args.name)
 
     if not os.path.exists('output/%s' %args.name):
@@ -269,8 +270,8 @@ def main():
         tcPbList = []
         etPbList = []
 
-        maskPath = glob("output/%s/" % args.name + "GT*.png")
-
+        maskPath = glob("output/%s/" % args.name + "GT/*.png")
+        print("output/%s/" % args.name)
         pbPath = glob("output/%s/" % args.name + "*.png")
         if len(maskPath) == 0:
             print("请先生成图片!")

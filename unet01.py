@@ -68,9 +68,17 @@ class Unet01(nn.Module):
 
     def forward(self, x):
         x, y1 = self.down1(x)
+        # b = torch.nn.functional.adaptive_max_pool2d(x,(1,1))
+        # bb = torch.nn.functional.adaptive_max_pool1d(x,1)
+        feature01 = torch.nn.functional.adaptive_max_pool2d(x,(1,1))
         x, y2 = self.down2(x)
+        feature02 = torch.nn.functional.adaptive_max_pool2d(x,(1,1))
         x, y3 = self.down3(x)
+        feature03 = torch.nn.functional.adaptive_max_pool2d(x,(1,1))
         x, y4 = self.down4(x)
+        feature04 = torch.nn.functional.adaptive_max_pool2d(x, (1, 1))
+
+        # features = feature01 + feature02 + feature03 + feature04
         x = F.dropout2d(F.relu(self.bn1(self.conv1(x))))
         x = F.dropout2d(F.relu(self.bn2(self.conv2(x))))
         x = self.up4(x, y4)
@@ -93,4 +101,5 @@ if __name__ == '__main__':
     model = models.cpu()
     summary(model,(4,160,160))
     # print(model)
-    print(count_params(model))
+    # print(count_params(model))
+
